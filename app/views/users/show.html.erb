@@ -1,0 +1,9 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @user %>
+
+<div>
+  <%= link_to "Вернуться на главную", main_path %>
+
+  <%= button_to "Destroy this user", @user, method: :delete %>
+</div>

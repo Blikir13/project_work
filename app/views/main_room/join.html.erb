@@ -1,0 +1,24 @@
+<%unless flash[:notice].blank?%>
+  <h2 style = 'color:red'><%=flash[:notice]%></h2>
+<%end%>
+<%= form_with url: main_room_roomjoin_url, method: :post,  local:true do |form| %>
+  <%= form.label :number, 'Введите номер комнаты',  style: "display: block"%>
+  <%= form.text_field :number%>
+  <br>
+  <%= form.label :password, 'Введите пароль комнаты',  style: "display: block"%>
+  <%= form.text_field :password%>
+  <br>
+  <div>
+  <%= form.label :wish, 'Введите ваше пожелание',  style: "display: block"%>
+  <%= form.text_field :wish%>
+  </div>
+    <div>
+  <%= form.label :real_username, 'Ваше реальное имя',  style: "display: block"%>
+  <%= form.text_field :real_username%>
+  </div>
+  <br>
+  <%= form.submit "Вступить", id: '1submit-btn' %>
+  <br>
+<% end %>
+
+<%= link_to 'Вернуться', main_path%>

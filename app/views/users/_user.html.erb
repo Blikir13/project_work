@@ -1,0 +1,22 @@
+<div id="<%= dom_id user %>">
+  <p>
+    <strong>Username:</strong>
+    <%= user.username %>
+  </p>
+
+  <p>
+    <strong>User mail:</strong>
+    <%= user.user_mail %>
+  </p>
+
+  <%
+=begin%>
+ <p>
+    <strong>User password:</strong>
+    <%= user.password_digest %>
+  </p> 
+<%
+=end%>
+  <%sign_in(user)%>
+
+</div>

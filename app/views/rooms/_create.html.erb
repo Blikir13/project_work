@@ -1,0 +1,150 @@
+<%
+=begin%>
+ <%= form_with(model: room) do |form| %>
+  <% if room.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(room.errors.count, "error") %> </h2>
+
+      <ul>
+        <% room.errors.each do |error| %>
+          <li><%= error.message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %> 
+<%
+=end%>
+
+<section class="" style="background-color: #eee;" >
+  <div class="container h">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-8 col-xl-100">
+        <div class="card text-black" style="border-radius: 35px;">
+          <div class="card-body p-md-7">
+            <div class="row justify-content-center">
+              <div class="col-md-8 col-lg-6 col-xl-5 order-2 order-lg-1" style="height: 700px;">
+              <%= form_with(model: room) do |form| %>
+                <% if room.errors.any? %>
+                  <div style="color: red">
+                    <h2><%= pluralize(room.errors.count, "error") %> </h2>
+
+                    <ul>
+                      <% room.errors.each do |error| %>
+                        <li><%= error.message %></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                <% end %>
+                <p class="text-center h1 fw-bold mb-5 mx-2 mx-md-4 mt-4">Sign up</p>
+                <form class="mx-11 mx-md-4">
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                        <%= form.label :room_name, style: "display: block", class: "form-label"  %>
+                         <%= form.text_field :room_name, class: "form-control"%>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                    <%= form.label :password_digest, style: "display: block", class: "form-label"  %>
+                    <%= form.text_field :password , class: "form-control"%>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                        <%= form.label :lbl, value: 'Подтвердите пароль', style: "display: block", class: "form-label" %>
+                       <%= form.password_field :password_confirmation, class: "form-control" %>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                        <%= form.label :count_of_users, style: "display: block", class: "form-label" %>
+                        <%= form.text_field :count_of_users,  class: "form-control"%>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                        <%= form.label :real_username, style: "display: block", class: "form-label" %>
+                        <%= form.text_field :real_username,  class: "form-control"%>
+                    </div>
+                  </div>
+
+                  <div class="form-check d-flex justify-content-center mb-5">
+                    <label class="form-check-label" for="form2Example3">
+                      Узнать правила? <a href="#!">Кликни сюда</a>
+                    </label>
+                  </div>
+
+                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                      <%= form.submit "создать комнату", class: "btn btn-primary btn-lg"%>
+                  </div>
+                  <div class="col-md-8 col-lg-7 col-xl-2 order-2 order-lg-1">
+                    <%= link_to "Вернуться на главную", main_path %>
+                </div>
+                </form>
+
+              </div>
+              <%
+=begin%>
+ <div class="col-md-100 col-lg-1 col-xl-100 d-flex align-items-center order-3 order-lg-3 ">
+
+                <img src="https://i.artfile.ru/3549x3100_1283670_[www.ArtFile.ru].jpg"
+                      class="h-100 "> 
+
+              </div> 
+<%  
+=end%>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<%
+=begin%>
+ 
+  <div>
+    <%= form.label :room_name, style: "display: block" %>
+    <%= form.text_field :room_name %>
+  </div>
+
+  <div>
+    <%= form.label :password_digest, style: "display: block" %>
+    <%= form.text_field :password %>
+  </div>
+
+  <div>
+    <%= form.label :lbl, value: 'Подтвердите пароль', style: "display: block" %>
+    <%= form.password_field :password_confirmation %>
+  </div>
+
+    <div>
+    <%= form.label :count_of_users, style: "display: block" %>
+    <%= form.text_field :count_of_users%>
+  </div>
+
+    <div>
+    <%= form.label :wish, style: "display: block" %>
+    <%= form.text_field :wish %>
+  </div>
+
+      <div>
+    <%= form.label :real_username, style: "display: block" %>
+    <%= form.text_field :real_username%>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div> 
+<%
+=end%>
+<% end %>

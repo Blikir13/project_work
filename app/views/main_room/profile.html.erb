@@ -1,0 +1,38 @@
+<h1>Ваш профиль<h1>
+<%unless flash[:notice].blank?%>
+  <h2 style = 'color:red'><%=flash[:notice]%></h2>
+<%end%>
+<table>
+<tr>
+<td> Username </td>
+<td> <%= (us = current_user ).username %> </td>
+</tr>
+<tr>
+<td> Email </td>
+<td> <%= us.user_mail %> </td>
+</tr>
+</table>
+
+<% if !(r = RoomUser.where("user_id = ? AND role = ?", us.id, ActiveSupport::JSON.encode('player')).all).empty? %>
+<div>Ваши комнаты:</div>
+<%r.each do |x| %>
+<%@room = Room.where("id = ?", x.room_id).take%>
+<%= link_to @room.room_name, showroom_url(:id => @room.id) %>
+<%= button_to "Quit this room", action: "quit",  id: @room.id%>
+<br>
+<%end%>
+<%end %>
+<% if !(t = RoomUser.where("user_id = ? AND role = ?", us.id, ActiveSupport::JSON.encode('admin')).all).empty? %>
+<div>Комнаты, где вы админ: </div>
+<%t.each do |x| %>
+<%@room = Room.where("id = ?", x.room_id).take%>
+<%= link_to @room.room_name, showroom_url(:id => @room.id) %>
+<%= button_to "Destroy this room", @room, method: :delete, confirm: "Are you sure you want to delete this restaurant?" %>
+<br>
+<%end %>
+<%end%>
+
+
+<%= link_to "Edit this user", edit_user_path(us) %> |
+<%=link_to 'Вернуться на главную', main_path%> 
+<%= button_to "Destroy this user", us, method: :delete, confirm: "Are you sure you want to delete this restaurant?" %>
