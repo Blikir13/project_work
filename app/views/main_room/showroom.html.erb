@@ -1,7 +1,60 @@
 <p style="color: green"><%= notice %></p>
 
 <% @room = Room.find(params[:id]) %>
-<%= @room.id%>
-  <%= link_to "Вернуться на главную", :back %>
-
+<% unless t = RoomUser.where('room_id = ? AND user_id = ?', @room.id, current_user.id).take.gift_user_id %>
+    <%roomuser = RoomUser.where('room_id = ?', @room.id).all%>
+<div class="container mt-1 d-inline-flex justify-content text-center justify-content-center">
+  <div class="card p-5">
+  <div class="ml-2 w-200 px-2 fs-1">
+  Информация о группе
+  </div>
+      <div class="image">
+      <img src="https://free-png.ru/wp-content/uploads/2021/10/free-png.ru-405.png" class="rounded" width="150" >
+      </div>
+    <div class="ml-2 w-100 px-2 ">
+      <h3> Участники: </h3>
+      <div class="mb-3 mt-3 row">
+        <% roomuser.each do |el|%>
+         <h4 class="mb-2 mt-1 flex-column">
+        <%=el.real_username%> 
+                  </h4> 
+        <%if el.role!='admin' && current_user.id == RoomUser.where('room_id = ? AND role = ?', @room.id, 'admin').take.user_id.to_i %>
+            <%=button_to "Delete User", action: "deleteuser",  id: el.user_id, class: "btn btn-sm btn-outline-primary w-150 fs-4 me-3"%>
+        <%end%>
+        <%end%>
+      </div>
+      <% if RoomUser.find_by(user_id: current_user.id, room_id: @room.id).role == 'admin'%>
+      <%if roomuser.size>=2 %>
+      
+        <%= button_to "Провести розыгрыш подарков", action: "lottery",  id: @room.id, class: "btn btn-sm btn-outline-primary w-150 fs-5"%>
+      <%else%>
+        <div class="fs-5"> Для розыгрыша слишком мало людей</div>
+      <%end%>
+      <div class="button mt-3 d-flex flex-row align-items-center g-2">
+      <%= button_to "Edit this room", edit_room_path(@room), method: :get, class: "btn btn-sm btn-outline-primary w-150 fs-5 me-2"%> 
+      <%end%>
+      <%= button_to "Вернуться на главную", :profile, method: :get, class: "btn btn-sm btn-outline-primary w-150 fs-5" %>
+      </div>
+    </div>
+  </div>
 </div>
+<%else%>
+<div class="container mt-1 d-inline-flex justify-content p-5 text-center justify-content-center">
+  <div class="card p-5">
+  <div class="d-flex align-items-center  ">
+          <div class="image">
+      <img src="https://free-png.ru/wp-content/uploads/2021/10/free-png.ru-434.png" class="rounded" width="150" >
+    <div class="ml-2 w-100 px-2 ">
+      <h3> Вы дарите подарок: </h3>
+      <div class="mb-3 mt-3 fs-1">
+        <%=  RoomUser.find_by(room_id: @room.id, user_id: t).real_username%>
+      </div>
+      <h3> И его пожелание: </h3>
+         <div class="mb-3 mt-3 fs-1">
+       <%=  RoomUser.find_by(room_id: @room.id, user_id: t).wish%>
+      </div>
+      <%= button_to "Вернуться на главную", :profile, method: :get %>
+    </div>
+  </div>
+</div>
+<%end%>

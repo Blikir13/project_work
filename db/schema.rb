@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_10_105102) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_16_132320) do
+  create_table "invites", force: :cascade do |t|
+    t.string "room_id"
+    t.string "user_id"
+    t.string "inviter_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "room_users", force: :cascade do |t|
     t.string "room_id"
     t.string "user_id"
@@ -19,11 +27,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_10_105102) do
     t.string "real_username"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "gift_user_id"
   end
 
   create_table "rooms", force: :cascade do |t|
     t.string "room_name"
-    t.string "room_number"
     t.string "password_digest"
     t.string "count_of_users"
     t.datetime "created_at", null: false

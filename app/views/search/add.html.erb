@@ -1,0 +1,9 @@
+<%unless flash[:notice].blank?%>
+  <h2 style = 'color:red'><%=flash[:notice]%></h2>
+<%end%>
+<%= "Выберите комнату в которую хотите добавить #{User.find_by(id: params[:id]).username}"%>
+<%= form_with url: addroom_url(:id => params[:id]), method: :post, class: "center" do |form| %>
+    <%= form.select :room, @mas%>
+    <%= form.submit "Отправить", class:"button" %>
+<%end%>
+<%=link_to "вернуться к вводу", search_url %>

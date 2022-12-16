@@ -1,20 +1,41 @@
-<%unless flash[:notice].blank?%>
-  <h2 style = 'color:red'><%=flash[:notice]%></h2>
-<%end%>
-<%=form_with url: session_create_url, method: :post, local:true do |f|%>
-	<table id='login'>
-		<tr>
-			<td><label>Имя пользователя</label></td>
-			<td><%=f.text_field :username, require: true %><br/></td>
-		</tr>
-		<tr>
-			<td><label>Пароль</label></td>
-			<td><%=f.password_field :password, require: true%><br/></td>
-		</tr>
-		<tr>
-			<td><%=f.submit id: 'submit-btn', value: 'Вход',require: true%></td>
-		</tr>
-	</table>
-<%end%>
-<%=link_to 'Регистрация', new_user_path%>
-<%= link_to 'На главную', main_path%>
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+            <div class="mb-md-5 mt-md-4 pb-5">
+            <%=form_with url: session_create_url, method: :post, local:true do |f|%>
+              <h2 class="fw-bold mb-2 text-uppercase">Вход</h2>
+              <p class="text-white-50 mb-5">Введите логин и пароль!</p>
+                            <%unless flash[:notice].blank?%>
+                <h2 style = 'color:red'><%=flash[:notice]%></h2>
+            <%end%>
+            <br>
+              <div class="form-outline form-white mb-4">
+                <%=f.text_field :username, require: true, class: "form-control form-control-lg" %>
+                <label class="form-label" for="typeEmailX">Логин</label>
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                <%=f.password_field :password, require: true, class:"form-control form-control-lg" %>
+                <label class="form-label" for="typePasswordX">Пароль</label>
+              </div>
+                <%=f.submit 'Вход', class: "btn btn-outline-light btn-lg px-5", require: true%>
+            </div>
+            <div>
+              <p class="mb-1">Еще нет акккаунта? 
+              <%=link_to 'Регистрация', new_user_path, class: "text-white-50 fw-bold"%>
+              </p>
+            </div>
+            <div>
+            <%= link_to 'На главную', main_path, class: "text-white-90 fw-bold"%>
+            </div>
+            <%end%>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

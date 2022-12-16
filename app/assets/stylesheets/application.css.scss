@@ -33,7 +33,66 @@ nav{
     padding: 7px 25px;
     display: inline-block;
     }
+    .gradient-custom {
+        /* fallback for old browsers */
+        background: #6a11cb;
+        
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+        
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+        }
 
-// body{
-//     background-image: url(https://otkritkis.com/wp-content/uploads/2022/06/pvozg.gif);
-// }
+.main_to_btn{
+    width: 400px;
+    height: 100px;
+    text-align: center;
+    font-size: 300px;
+    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+}
+.card{
+    width: auto;
+    border: none;
+    border-radius: 100px;
+    background-color: #fff;
+  }
+  
+  
+  
+  .stats{
+  
+        background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+      color: #000 !important;
+      width: auto;
+      text-align: center;
+  }
+  .articles{
+    font-size:10px;
+    color: #a1aab9;
+    text-align: center;
+  }
+  .number1{
+    font-weight:500;
+    text-align: center;
+    text-align: center;
+  }
+  .followers{
+      font-size:10px;
+    color: #a1aab9;
+    text-align: center;
+  
+  }
+  .number2{
+    font-weight:500;
+    text-align: center;
+  }
+  .rating{
+      font-size:10px;
+    color: #a1aab9;
+  }
+  .number3{
+    text-align: center;
+    font-weight:500;
+  }
+

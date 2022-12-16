@@ -1,37 +1,71 @@
-<%= form_with(model: user) do |form| %>
-  <% if user.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(user.errors.count, "error") %> </h2>
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+            <div class="mb-md-5 mt-md-4 pb-2">
+            <%= form_with(model: user) do |form| %>
+              <% if user.errors.any? %>
+                <div style="color: red">
+                  <h2><%= pluralize(user.errors.count, "error") %> </h2>
 
-      <ul>
-        <% user.errors.each do |error| %>
-          <li><%= error.message %></li>
-        <% end %>
-      </ul>
+                  <ul>
+                    <% user.errors.each do |error| %>
+                      <li><%= error.message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+              <%unless current_user%>
+              <h2 class="fw-bold mb-2 text-uppercase">Регистрация</h2>
+              <%else%>
+              <h2 class="fw-bold mb-2 text-uppercase">изменение профиля</h2>
+              <%end%>
+            <br>
+              <div class="form-outline form-white mb-4">
+                <%=form.text_field :username, require: true, class: "form-control form-control-lg" %>
+                <label class="form-label" for="typeEmailX">Логин</label>
+
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                <%=form.text_field :user_mail, require: true, class:"form-control form-control-lg" %>
+                <label class="form-label" for="typePasswordX">Почта</label>
+              </div>
+                            <div class="form-outline form-white mb-4">
+                <%=form.password_field :password, require: true, class:"form-control form-control-lg" %>
+                <label class="form-label" for="typePasswordX">Пароль</label>
+              </div>
+                            <div class="form-outline form-white mb-4">
+                <%=form.password_field :password_confirmation, require: true, class:"form-control form-control-lg" %>
+                <label class="form-label" for="typePasswordX">Подтвердите пароль</label>
+              </div>
+              <%unless current_user%>
+              <%=form.submit 'Вход', class: "btn btn-outline-light btn-lg px-5", require: true%>
+              <%else%>
+             <%=form.submit 'Изменить', class: "btn btn-outline-light btn-lg px-5", require: true%>
+              <%end%>
+            </div>
+                <div>
+              <p class="mb-1">Уже есть профиль? 
+              <%=link_to 'Войти', session_login_path, class: "text-white-50 fw-bold"%>
+              </p>
+            </div>
+            <div>
+            </div>
+            <div>
+              <%unless current_user%>
+              <%= link_to 'На главную', main_path, class: "text-white-90 fw-bold"%>
+              <%else%>
+              <%= link_to 'В профиль', profile_path, class: "text-white-90 fw-bold"%>
+              <%end%>
+            </div>
+            <%end%>
+
+          </div>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div>
-    <%= form.label :username, style: "display: block" %>
-    <%= form.text_field :username %>
   </div>
-
-  <div>
-    <%= form.label :user_mail, style: "display: block" %>
-    <%= form.text_field :user_mail %>
-  </div>
-
-  <div>
-    <%= form.label :password_digest, style: "display: block" %>
-    <%= form.text_field :password %>
-  </div>
-
-  <div>
-    <%= form.label :lbl, value: 'Подтвердите пароль', style: "display: block" %>
-    <%= form.password_field :password_confirmation %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</section>

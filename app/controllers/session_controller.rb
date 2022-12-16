@@ -15,7 +15,7 @@ class SessionController < ApplicationController
       sign_in user # Наш метод входа, описанный в хелпере
       redirect_to main_path
     else
-      redirect_to session_login_url
+      redirect_to session_login_url, notice: 'неверный логин или пароль'
     end
   end
 

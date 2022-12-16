@@ -1,0 +1,22 @@
+<div id="result" class="table">
+<h1 class="color-text center"> Найденные пользователи: </h1>
+<table class="table table-striped fs-1">
+    <thead>
+    <tr>
+    <th scope="col">#</th>
+    <th scope="col">First</th>
+    </tr>
+    <thead>
+
+    <tbody>
+    <% @result.each_with_index do |el, idx| %>
+    <%unless el.id==current_user.id %>
+    <tr>
+        <td> <%= idx+1 %>.</td>
+        <td class="col-5"> <%=link_to el.username, add_url(:id => el.id ) %> </td>
+    </tr>
+    <%end%>
+    <% end %>
+    </tbody>
+</table>
+</div>

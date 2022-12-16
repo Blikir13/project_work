@@ -1,0 +1,9 @@
+<h1 class="color-text center">приглашение</h1>
+<%= form_with url: result_path, class: "center", 
+    id: "palindrom_form" do |form| %>
+    <%= form.label :n, "Введите логин пользователя:", class: "center" %>
+    <%= form.text_field :n, class: "text-field" %>
+    <%= form.submit "Найти", class:"button" %>
+<% end %>
+<%= link_to  "Вернуться на главную", main_path%>
+<div id="result" class="table"></div>

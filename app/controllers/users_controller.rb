@@ -23,11 +23,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     respond_to do |format|
       if @user.save
-        format.html { redirect_to user_url(@user), notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
+        sign_in(@user)
+        format.html { redirect_to main_path, notice: 'User was successfully created.' }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -48,7 +47,7 @@ class UsersController < ApplicationController
   # DELETE /users/1 or /users/1.json
   def destroy
     @user.destroy
-
+    checkroom(@user)
     respond_to do |format|
       format.html { redirect_to main_path, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
@@ -56,6 +55,21 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def checkroom(user)
+    if (t = RoomUser.where('user_id = ? AND role = ?', user.id, 'admin').all)
+      t.each do |x|
+        RoomUser.where('room_id = ?', x.room_id).all.each(&:destroy)
+        Room.where('id = ?', x.room_id).take.destroy
+      end
+    end
+    if (m = RoomUser.where('user_id = ? AND role = ?', user.id, 'player').take)
+      m.destroy
+    end
+    if (p = Invite.find_by('user_id = ? OR inviter_id = ?', user.id, user.id).all)
+      p.each(&:destroy)
+    end
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_user
