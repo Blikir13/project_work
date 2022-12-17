@@ -1,9 +1,17 @@
-<h1 class="color-text center">приглашение</h1>
-<%= form_with url: result_path, class: "center", 
-    id: "palindrom_form" do |form| %>
-    <%= form.label :n, "Введите логин пользователя:", class: "center" %>
-    <%= form.text_field :n, class: "text-field" %>
-    <%= form.submit "Найти", class:"button" %>
-<% end %>
-<%= link_to  "Вернуться на главную", main_path%>
+
+<div class="col-5 mx-auto text-center fs-1 bgo mt-5 ">
+<div class="text-light">
+<%= t('.title') %>
+</div>
+<div class="fs-2 p-4 col-5 mx-auto">
+<%= form_with url: result_path, class: "row gy-3 gx-3 ", id: "palindrom_form" do |form| %>
+    <%= form.text_field :n, class: "form-control" %>
+    <br>
+    <%= form.submit t('.search'), class:"btn btn-dark fs-3" %>
+</div >
+<%end%>
+<%=link_to t('.to_main'), main_path, class: "link-light" %>
+</div>
+
 <div id="result" class="table"></div>
+

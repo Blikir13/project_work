@@ -6,34 +6,34 @@
 <div class="container mt-1 d-inline-flex justify-content text-center justify-content-center">
   <div class="card p-5">
   <div class="ml-2 w-200 px-2 fs-1">
-  Информация о группе
+  <%= t('.info')%>
   </div>
       <div class="image">
       <img src="https://free-png.ru/wp-content/uploads/2021/10/free-png.ru-405.png" class="rounded" width="150" >
       </div>
     <div class="ml-2 w-100 px-2 ">
-      <h3> Участники: </h3>
+      <h3> <%=t('.players')%> </h3>
       <div class="mb-3 mt-3 row">
         <% roomuser.each do |el|%>
          <h4 class="mb-2 mt-1 flex-column">
         <%=el.real_username%> 
                   </h4> 
         <%if el.role!='admin' && current_user.id == RoomUser.where('room_id = ? AND role = ?', @room.id, 'admin').take.user_id.to_i %>
-            <%=button_to "Delete User", action: "deleteuser",  id: el.user_id, class: "btn btn-sm btn-outline-primary w-150 fs-4 me-3"%>
+            <%=button_to t('.delete'), deleteuser_url(:id => el.user_id, locale: params[:locale] ), method: :post, class: "btn btn-sm btn-outline-primary w-150 fs-4 me-3"%>
         <%end%>
         <%end%>
       </div>
       <% if RoomUser.find_by(user_id: current_user.id, room_id: @room.id).role == 'admin'%>
       <%if roomuser.size>=2 %>
       
-        <%= button_to "Провести розыгрыш подарков", action: "lottery",  id: @room.id, class: "btn btn-sm btn-outline-primary w-150 fs-5"%>
+        <%= button_to t('.lotter'), action: "lottery",  id: @room.id, class: "btn btn-sm btn-outline-primary w-150 fs-5"%>
       <%else%>
-        <div class="fs-5"> Для розыгрыша слишком мало людей</div>
+        <div class="fs-5"> <%= t('.less') %> </div>
       <%end%>
-      <div class="button mt-3 d-flex flex-row align-items-center g-2">
-      <%= button_to "Edit this room", edit_room_path(@room), method: :get, class: "btn btn-sm btn-outline-primary w-150 fs-5 me-2"%> 
+      <div class="button mt-3 d-flex flex-row align-items-center g-2 justify-content-center">
+      <%= button_to t('.edit'), edit_room_url(:id => @room, locale: params[:locale]), method: :get, class: "btn btn-sm btn-outline-primary w-150 fs-5 me-2"%> 
       <%end%>
-      <%= button_to "Вернуться на главную", :profile, method: :get, class: "btn btn-sm btn-outline-primary w-150 fs-5" %>
+      <%= button_to t('.back'), :profile, method: :get, class: "btn btn-sm btn-outline-primary w-150 fs-5" %>
       </div>
     </div>
   </div>
@@ -45,15 +45,15 @@
           <div class="image">
       <img src="https://free-png.ru/wp-content/uploads/2021/10/free-png.ru-434.png" class="rounded" width="150" >
     <div class="ml-2 w-100 px-2 ">
-      <h3> Вы дарите подарок: </h3>
+      <h3> <%= t('.present') %> </h3>
       <div class="mb-3 mt-3 fs-1">
         <%=  RoomUser.find_by(room_id: @room.id, user_id: t).real_username%>
       </div>
-      <h3> И его пожелание: </h3>
+      <h3> <%= t('.wish') %> </h3>
          <div class="mb-3 mt-3 fs-1">
        <%=  RoomUser.find_by(room_id: @room.id, user_id: t).wish%>
       </div>
-      <%= button_to "Вернуться на главную", :profile, method: :get %>
+      <%= button_to t('.back'), :profile, method: :get %>
     </div>
   </div>
 </div>

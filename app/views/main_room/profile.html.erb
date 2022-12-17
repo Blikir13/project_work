@@ -2,94 +2,104 @@
 <%unless flash[:notice].blank?%>
   <h2 style = 'color:red'><%=flash[:notice]%></h2>
 <%end%>
+<div class="d-flex flex-column me-4 ">
 <div class="container mt-2 d-flex justify-content p-5 text-center justify-content-center">
   <div class="card p-5">
-      <div class="d-flex align-items-center  ">
+      <div class="d-flex align-items-center">
           <div class="image">
-      <img src="https://avatars.mds.yandex.net/i?id=75655f3bfba97552c98e23bd721fc8ef2c5aed1d-8231149-images-thumbs&n=13&exp=1" class="rounded" width="150" >
+      <img src="https://avatars.mds.yandex.net/i?id=75655f3bfba97552c98e23bd721fc8ef2c5aed1d-8231149-images-thumbs&n=13&exp=1" class="rounded" width="200" >
       </div>
       <div class="ml-3 w-100 px-5 ">
-          <h1 class="mb-1"><%= (us = current_user ).username %> </h1>
-          <h2><%= us.user_mail %></h2>
-          <div class="p-4 mt-1 d-flex justify-content-between rounded text-white stats">
-          <div class="d-flex flex-column">
-              <h2 class="articles">Всего у вас комнат</h2>
-              <h2 class="number1"><%= RoomUser.where('user_id = ?', current_user.id).all.length%></h2>
+        <h1 class="mb-1"><%= (us = current_user ).username %> </h1>
+        <h2><%= us.user_mail %></h2>
+        <div class="p-4 mt-1 d-flex justify-content-between rounded text-white stats">
+          <div class="d-flex flex-column me-4">
+            <h2 class="articles"><%= t('.roomsc')%></h2>
+            <h2 class="number1"><%= RoomUser.where('user_id = ?', current_user.id).all.length%></h2>
           </div>
           <div class="d-flex flex-column">
-              <h2 class="rating">Комнаты, где вы админ</h2>
+              <h2 class="rating"><%= t('.roomsa')%></h2>
               <h2 class="number3"><%=RoomUser.where("user_id = ? AND role = ?", us.id, 'admin').all.length%></h2>
           </div>
           </div>
-          <div class="button mt-3 d-flex flex-row align-items-center g-2">
-          <%= button_to "Изменить профиль", edit_user_path(us), method: :get, class: "btn btn-sm btn-outline-primary w-150 fs-3 me-2" %>
-          <%= button_to "Удалить профиль", us, method: :delete, confirm: "Are you sure you want to delete this restaurant?", class: "btn btn-sm btn-primary w-100 ml-2 fs-3 " %>
+          <div class="button mt-3 d-flex flex-row align-items-center g-1 me-2 justify-content-center">
+            <%= button_to t('.change'), edit_user_path(id: us, locale: params[:locale]), method: :get, class: "btn btn-sm btn-outline-primary w-150 fs-3 me-3" %>
+            <%= button_to t('.deletep'), destroy_url(:id => us, locale: params[:locale]),method: :post, params:{locale: params[:locale]} , class: "btn btn-sm btn-primary w-100 ml-2 fs-3 " %>
+          </div>
+          <div>
+            <h1 class="align-items-center my-2">
+              <%= link_to t('.to_main'), main_path%>
+            </h1>
           </div>
       </div>
-      </div>
+    </div>
   </div>
 </div>
 
 <% if !(t = RoomUser.where("user_id = ?", us.id).all).empty? %>
-<div class="p-4 mt-1 d-flex justify-content-between rounded col-md-4">
+<div class="p-4 mt-1 d-flex justify-content-between rounded col-md-3 me-4 ">
 <%t.each do |x| %>
 <%@room = Room.where("id = ?", x.room_id).take%>
-<div class="container mt-1 d-flex justify-content p-3 text-center">
-  <div class="card p-4">
-      <div class="ml-3 w-100 px-5 ">
+<div class="container mt-2 d-flex justify-content p-1 text-center justify-content-center me-2">
+  <div class="card p-4 justify-content-center">
+      <div class="ml-5 w-100 px-5 ">
           <h1 class="mb-1"> <%= link_to @room.room_name, showroom_url(:id => @room.id) %> </h1>
           <%if x.role == 'admin'%>
-            <h4 class="mb-1 p-2"> администратор </h4>
+            <h4 class="mb-1 p-2"> <%= t('.admin')%> </h4>
           <%else%>
-            <h4> игрок </h4>
+            <h4 class="mb-1 p-2"> <%=t('.player') %> </h4>
           <%end%>
-          <div class="p-4 mt-3 d-flex justify-content-between rounded text-white stats">
-            <div class="d-flex flex-column">
-                <h2 class="articles">Количество человек в комнате:</h2>
-                <h2 class="number1"><%= RoomUser.where('room_id = ?', @room.id).all.length%> /
+          <div class="p-5 mt-2 d-flex justify-content-center rounded text-white stats">
+            <div class="d-flex flex-column justify-content-center px-4">
+                <h2><%= t('.count')%></h2>
+                <h2><%= RoomUser.where('room_id = ?', @room.id).all.length%> /
                 <%= @room.count_of_users%></h2>
             </div>
           </div>
 
           <%if x.gift_user_id%>
             <div class="mt-1 fs-4 text-danger">
-            В комнате произошел розыгрыш, поспеши узнать результат!
+            <%=t('.lottery')%>
             </div>
             <%end%>
             <%if x.role == 'admin'%>
-            <div class="button mt-3">
-              <%= button_to "Удалить комнату", @room, method: :delete, class: "btn btn-sm btn-outline-primary w-150 fs-4 me-2" %>
+            <div class="button mt-3 justify-content-center">
+              <%= button_to t('.deleter'), destroyroom_url(:id => @room),method: :post , params:{locale: params[:locale]}, class: "btn btn-sm btn-outline-primary w-150 fs-4" %>
               </div>
             <%else%>
-              <div class="button mt-3">
-              <%= button_to "Выйти из комнаты", class: "btn btn-sm btn-outline-primary w-150 fs-4 me-2" , action: "quit",  id: @room.id, method: :post%>
+              <div class="button mt-3 justify-content-center">
+              <%= button_to t('.quit'), :quit, class: "btn btn-sm btn-outline-primary w-150 fs-4" , params: { id: @room.id }, method: :post%>
               </div>
             <%end%>
       </div>
-  </div>
-</div>
+   </div>
+ </div>
 <%end %>
-</div>
 <%end%>
+</div>
+
 
 <% if !(t = Invite.where("user_id = ?", us.id).all).empty? %>
 <div class="p-4 mt-1 d-flex justify-content-between rounded col-md-4">
 <%t.each do |x| %>
-  <div class="container mt-1 d-flex justify-content p-3 text-center">
+  <div class="container mt-1 d-flex justify-content p-1 text-center">
       <div class="card p-4">
-  <h4> Вам отправлено приглашение в комнату: </h4>
-  <h1>
-  <%= Room.find_by(id: x.room_id).room_name%>
-  </h1>
-  <h4> от пользователя <%=User.find_by(id: x.inviter_id).username%> </h4>
-    <div class="button mt-3 d-flex flex-row g-2 justify-content-center">
-    <%= button_to "Принять", :join_invite ,params: {id: x.room_id} ,method: :get ,class: "btn btn-sm btn-outline-primary fs-3 me-2" %>
-    <%= button_to "отколнить", :reject_invite, params: {id: x.room_id}, method: :post, class: "btn btn-sm btn-primary ml-2 fs-3 " %>
+        <div class="ml-3 w-100 px-5 ">
+          <h4> <%=t('.invite')%> </h4>
+          <h1>
+          <%= Room.find_by(id: x.room_id).room_name%>
+          </h1>
+          <h4> <%=t('.from')%> <%=User.find_by(id: x.inviter_id).username%> </h4>
+          <div class="button mt-3 d-flex flex-row g-2 justify-content-center">
+          <%= button_to t('.accept'), :join_invite ,params: {id: x.room_id} ,method: :get ,class: "btn btn-sm btn-outline-primary fs-3 me-2" %>
+          <%= button_to t('.reject'), :reject_invite, params: {id: x.room_id}, method: :post, class: "btn btn-sm btn-primary ml-2 fs-3 " %>
+        </div>
+      </div>
     </div>
-</div>
-</div>
+  </div>
 <%end%>
 <%end%>
 </div>
 
-<%= link_to "Main", main_path%>
+</div>
+

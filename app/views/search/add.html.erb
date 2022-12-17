@@ -1,9 +1,24 @@
 <%unless flash[:notice].blank?%>
   <h2 style = 'color:red'><%=flash[:notice]%></h2>
 <%end%>
-<%= "Выберите комнату в которую хотите добавить #{User.find_by(id: params[:id]).username}"%>
+<div class="col-5 mx-auto text-center fs-1 bgo justify-content-center mt-5">
+<div class="text-light">
+<%= t('.title')%>
+<%= User.find_by(id: params[:id]).username%>
+</div>
+<div class="fs-2 p-4">
+<% if RoomUser.where('user_id = ? AND role = ?', current_user, 'admin').take %>
 <%= form_with url: addroom_url(:id => params[:id]), method: :post, class: "center" do |form| %>
     <%= form.select :room, @mas%>
-    <%= form.submit "Отправить", class:"button" %>
+    <br>
+    <%= form.submit t('.send'), class:"btn btn-primary fs-2 mt-4" %>
 <%end%>
-<%=link_to "вернуться к вводу", search_url %>
+<% else %>
+<div class="text-danger">
+У вас пока нет комнат!
+</div>
+<%end%>
+</div >
+<%=link_to t('.link'), search_url, class: "link-light" %> |
+<%=link_to 'на главную', main_path, class: "link-light" %>
+</div>

@@ -35,7 +35,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to user_url(@user), notice: 'User was successfully updated.' }
+        format.html { redirect_to user_url(locale: params[:locale]), notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -66,8 +66,8 @@ class UsersController < ApplicationController
     if (m = RoomUser.where('user_id = ? AND role = ?', user.id, 'player').take)
       m.destroy
     end
-    if (p = Invite.find_by('user_id = ? OR inviter_id = ?', user.id, user.id).all)
-      p.each(&:destroy)
+    if (p = Invite.find_by('user_id = ? OR inviter_id = ?', user.id, user.id))
+      p.all.each(&:destroy)
     end
   end
 

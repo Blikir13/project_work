@@ -6,47 +6,83 @@
 <svg class="bi me-2" width="40" height="32">
 <use xlink:href="#bootstrap"></use>
 </svg>
-  <span class="fs-1">Тайный Санта</span>
+  <span class="fs-1"><%= t('.title')%>
+    <div class="fs-1 me-5">
+    <%= link_to 'Русский', main_path(locale: :ru) %> |
+    <%= link_to 'English', main_path(locale: :en) %> 
+  </div>
+  </span>
+
 </a>
 
 <ul class="nav nav-pills">
 <% if signed_in?%>
 <a>
-<%=button_to 'Выйти из учетной записи', session_logout_path, class: "btn btn-outline-primary me-3 fs-2"%>
+<%=button_to  t('.quit'), session_logout_path, class: "btn btn-outline-primary me-3 fs-2"%>
 <%= form_with url: :profile, method: :get do |form| %>
-  <%= form.submit "Просмотреть профиль", id: 'submit-btn', class: "btn btn-primary fs-2" %>
+  <%= form.submit t('.view'), id: 'submit-btn', class: "btn btn-primary fs-2" %>
   </a>
 <% end %>
 <%else%>
-<%=button_to 'Регистрация', new_user_path, method: :get, class: "btn btn-outline-primary me-3 fs-2"%>
-<%=button_to 'Войти', session_login_path, method: :get, class: "btn btn-primary fs-2"%>
+<%=button_to t('.reg'), new_user_path, method: :get, class: "btn btn-outline-primary me-3 fs-2"%>
+<%=button_to t('.log'), session_login_path, method: :get, class: "btn btn-primary fs-2"%>
 <%end%>
-<%= t('hello')%>
 </ul>
 </header>
 </div>
+
+<div class="col-5 mx-auto text-center fs-1 text-light bgo justify-content-center">
+До нового года осталось всего
+<%= ( Date.new(2022, 12, 31)- Date.today).to_i %>
+ дней! <br>
+Поспеши разыграть подарки, не огорчай нашего тайного Санту!
+</div>
+
 <%unless flash[:notice].blank?%>
   <h2 style = 'color:red'><%=flash[:notice]%></h2>
 <%end%>
-<div class="d-grid gap-3 col-3 mx-auto text-center">
-<%= form_with url: 'rooms/createroom', method: :get do |form| %>
-  <%= form.submit "Создать комнату", id: '1submit-btn', class:"btn btn-primary main_to_btn fs-1" %>
+<div class="d-grid gap-3 col-3 mx-auto text-center fs-1 container justify-content-center">
+<%= form_with url: createroom_url(locale: params[:locale]),params:{locale: params[:locale]} , method: :get do |form| %>
+  <%= form.submit t('.create'), id: '1submit-btn', class:"btn btn-primary main_to_btn fs-1" %>
   <br>
 <% end %>
-<%= form_with url: 'main_room/join', method: :get do |form| %>
-  <%= form.submit "Вступить в комнату", id: '1submit-btn', class: "btn btn-primary main_to_btn fs-1" %>
+<%= form_with url: join_url(locale: params[:locale]), method: :get do |form| %>
+  <%= form.submit t('.join'), id: '1submit-btn', class: "btn btn-primary main_to_btn fs-1" %>
   <br>
 <% end %>
 <%= form_with url: :search, method: :get do |form| %>
-  <%= form.submit "Отправить приглашение", id: '1submit-btn', class: "btn btn-primary main_to_btn fs-1" %>
+  <%= form.submit t('.send'), id: '1submit-btn', class: "btn btn-primary main_to_btn fs-1" %>
   <br>
 <% end %>
 </div>
 
-<div>
-    <%= link_to 'English', main_path(locale: :en) %> |
-    <%= link_to 'Русский', main_path(locale: :ru) %>
-  </div>
+<div id="animatedImage" style="position:fixed;padding-top:0px;z-index:99;left:1px;">
+ <img id="img1" src="https://i.pinimg.com/originals/d9/6d/15/d96d15973176b36891167fc8a9a43d29.gif" alt="animatedImage" class="m" />
+</div>
+<script>
+var distanceBall=1; 
+var directionBall=2; 
+document.getElementById('animatedImage').style.top = 1;
+document.getElementById('animatedImage').style.left = 1;
+var timerToggle=null; 
+
+animateBall();
+  function animateBall() {
+  document.getElementById("animatedImage").style.left=distanceBall + "px";
+  distanceBall+=directionBall;
+  if (distanceBall>window.screen.width - 300 ) { 
+  document.getElementById('animatedImage').style.top = 1;
+  document.getElementById('animatedImage').style.left = 1;
+  directionBall = -2;
+  document.getElementById('img1').className = 'left';
+  }
+  if (distanceBall<0) {
+  directionBall = 2;
+  document.getElementById('img1').className = 'right';
+  }
+  timerToggle=setTimeout(function() { animateBall(); }, 1);
+  }
+  </script>
 
 
 

@@ -51,15 +51,23 @@ nav{
     font-size: 300px;
     background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
 }
-.card{
+.cardm{
     width: auto;
     border: none;
     border-radius: 100px;
     background-color: #fff;
   }
   
+  .card{
+    width: auto;
+    border: none;
+    border-radius: 100px;
+    background-color: #fff;
+  }
   
-  
+  .bgo{
+    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+  }
   .stats{
   
         background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
@@ -95,4 +103,29 @@ nav{
     text-align: center;
     font-weight:500;
   }
+
+  .left {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+    width: 300px;
+    height: auto;
+}
+.right {
+    -moz-transform: scaleX(1);
+    -o-transform: scaleX(1);
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+    width: 300px;
+    height: auto;
+}
+img.m{ 
+  width: 300px;
+  height: auto;
+}
 

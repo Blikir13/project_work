@@ -6,7 +6,7 @@ class RoomsController < ApplicationController
   end
 
   def check
-    redirect_to main_path, notice: 'вы не авторизированы!' unless signed_in?
+    redirect_to main_path, notice: t('.n') unless signed_in?
   end
 
   def create
@@ -15,13 +15,10 @@ class RoomsController < ApplicationController
     @roomuser.room_id = @room.id
     @roomuser.user_id = current_user.id
     @roomuser.role = 'admin'
-    respond_to do |format|
-      if @room.save && @roomuser.save
-        format.html { redirect_to showroom_url(:id => @room.id)}
-      else
-        format.html { render 'rooms/createroom', status: :unprocessable_entity }
-      end
-
+    if @room.save && @roomuser.save
+      redirect_to showroom_url(:id => @room.id)
+    else
+      render 'rooms/createroom', status: :unprocessable_entity 
     end
   end
 
@@ -34,7 +31,7 @@ class RoomsController < ApplicationController
   def update
     respond_to do |format|
       if @room.update(room_params)
-        format.html { redirect_to :profile, notice: 'Room was succesfule updated' }
+        format.html { redirect_to :profile, notice: t('.not') }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -42,14 +39,10 @@ class RoomsController < ApplicationController
   end
 
   def destroy
-    p @room
-    RoomUser.where("room_id = ?", @room.id).all.each do |el|
-      el.destroy
-    end
+    RoomUser.where('room_id = ?', @room.id).all.each(&:destroy)
     @room.destroy
-    respond_to do |format|
-      format.html { redirect_to profile_url, notice: 'Room was successfully destroyed.' }
-    end
+    redirect_to profile_url, notice: 'Room was successfully destroyed.'
+    # add_to_history(@room)
   end
 
   def room_params

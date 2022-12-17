@@ -18,7 +18,7 @@ class SearchController < ApplicationController
     id = params[:id]
     roomname = params[:room]
     p RoomUser.where('user_id = ? AND room_id = ?', id, Room.find_by(room_name: roomname).id).empty?
-    if !RoomUser.where('user_id = ? AND room_id = ?', id, Room.find_by(room_name: roomname).id).empty?
+    unless RoomUser.where('user_id = ? AND room_id = ?', id, Room.find_by(room_name: roomname).id).empty?
       redirect_to add_url(id: id), notice: 'пользователь уже в комнате!'
       return
     end

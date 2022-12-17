@@ -1,2 +1,107 @@
 en:
-  hello: "Hello world"
+  main_room:
+    main:
+      title: "Secret Santa"
+      quit: "Quit"
+      view: "view profile"
+      create: "Create room"
+      join: "Join room"
+      send: "Send an invitation"
+      reg: "Registration"
+      log: "login"
+    profile:
+      roomsc: "Total of rooms"
+      roomsa: "Rooms where you are the admin"
+      change: "Edit profile"
+      deletep: "Delete profile"
+      player: "Player"
+      admin: "Admin"
+      count: "Count of users"    
+      quit: "Quit room"  
+      deleter: "Delete room"
+      lottery: "here was a drawing in the room, check it"
+      invite: "you were invited into the room"
+      from: "from user:"
+      accept: "accept"
+      reject: "reject"
+      to_main: "to the main page"
+    showroom:
+      info: "Information"
+      players: "players"
+      back: "back to profile"
+      delete: "delete user"
+      edit: "edit room"
+      lotter: "conduct a drawing"
+      less: "There are too few people for the draw"
+      present: "You are giving a gift:"
+      wish: "And his wish:"
+    join:
+      real_username: "Real user name"
+      count_of_users: "Count of users"
+      password: "Password"
+      room_name: "Room name"
+      wish: "Wosh"
+      to_main: "back to main"
+      know: "Learn the rules?"
+      join: "Join the room"
+      click: "Click here"
+      title: "Join an existing room?"
+  activerecord:
+    attributes:
+      room:
+        real_username: "Real username"
+        count_of_users: "Count of users"
+        password: "Password"
+        room_name: "Room name"
+        wish: "Wish"
+        password_confirmation: "Confirm password"
+      user:
+        username: "Username"
+        user_mail: "Email"
+        password: "Password"
+        password_confirmation: "Confirm password"
+  users:
+    form:
+      title: "Edit a profile"
+      reg: "Registration"
+      question: "Do you have a profile?"
+      edit: "edit"
+      sign: "sign up"
+      log: "login"
+      to_main: "to the main page"
+      to_prof: "back to profile"
+  rooms:
+    create:
+      know: "Learn the rules?"
+      click: "click here"
+      create: "Create room"
+      to_main: "back to main"
+      title: "Do you want to create the room?"
+      n: "You don't login"
+    update:
+      not: "Room was succesfule updated"
+  session:
+    login:
+        username: "Username" 
+        password: "Password"
+        log: "login"
+        inp: "Input username and password!"
+        que: "Don't have an account yet?"
+        reg: "sign up"
+        to_main: "back to main"
+  search:
+    input:
+      title: "Input login"
+      search: "Search user"
+      login: "login"
+      to_main: "to the main page"
+    result:
+      title: "founded users:"
+      login: "login"
+    add:
+      title: "Choose a room where you want to add"
+      send: "send"
+      link: "back to input"
+
+
+
