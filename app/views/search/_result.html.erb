@@ -13,7 +13,7 @@
     <%unless el.id==current_user.id %>
     <tr>
         <td> <%= idx+1 %>.</td>
-        <td class="col-5"> <%=link_to el.username, add_url(:id => el.id ) %> </td>
+        <td class="col-5"> <%=link_to el.username, add_url(:id => el.id ), id:"link_to_user" %> </td>
     </tr>
     <%end%>
     <% end %>

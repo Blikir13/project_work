@@ -1,14 +1,14 @@
 class ApplicationController < ActionController::Base
   include SessionHelper
   before_action :set_locale
-  # before_action :require_login
-
-  def check
-    redirect_to main_path, notice: 'вы не авторизированы!' unless signed_in?
-  end
+  before_action :require_login
 
   def require_login
     redirect_to session_login_url unless signed_in?
+  end
+
+  def check
+    redirect_to main_path, notice: t('.notice') unless signed_in?
   end
 
   def default_url_options
@@ -23,5 +23,4 @@ class ApplicationController < ActionController::Base
     parsed_locale = params[:locale]
     parsed_locale.to_sym if I18n.available_locales.map(&:to_s).include?(parsed_locale)
   end
-
 end

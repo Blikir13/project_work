@@ -1,5 +1,5 @@
 class MainRoomController < ApplicationController
-  # before_action :set_room, only: %i[show showroom update destroy]
+  skip_before_action :require_login, only: :main
   before_action :check, only: :roomjoin
   def main; end
 
@@ -25,54 +25,23 @@ class MainRoomController < ApplicationController
   def roomjoininvite
     @rm = Room.where('id = ?', params[:id]).take
     if RoomUser.find_by(room_id: @rm.id).gift_user_id
-      redirect_to main_room_join_url, notice: 'В комнате уже прошел розыгрыш! Ты не можешь в нее вступить!'
+      redirect_to main_room_join_url, notice: t('.lottery')
       return
     end
     if @rm.count_of_users.to_i == RoomUser.where('room_id = ?', @rm.id).all.length
-      redirect_to main_room_join_url, notice: 'Комната полностью заполнена!'
+      redirect_to main_room_join_url, notice: t('.full')
       return
     end
     Invite.where('room_id = ? AND user_id = ?', @rm.id, current_user.id).take.destroy
     @newroom = RoomUser.create
     @newroom.update(room_id: @rm.id, user_id: current_user.id, role: 'player', wish: params[:wish],
                     real_username: params[:real_username])
-    redirect_to showroom_url(id: @rm.id), notice: 'вы успешно вступили в комнату!'
+    redirect_to showroom_url(id: @rm.id), notice: t('.success')
   end
 
   def reject_invite
     Invite.where('room_id = ? AND user_id = ?', Room.where('id = ?', params[:id]).take.id, current_user.id).take.destroy
-    redirect_to profile_url(id: Room.where('id = ?', params[:id]).take.id), notice: 'вы успешно отклонили приглашение!'
-  end
-
-  def roomjoin
-    @rm = Room.where('room_name = ?', params[:room_name]).take
-    unless @rm
-      redirect_to :join, notice: 'Комнаты с таким именем не существует!'
-      return
-    end
-    if RoomUser.find_by(room_id: @rm.id).gift_user_id
-      redirect_to :join, notice: 'В комнате уже прошел розыгрыш! Ты не можешь в нее вступить!'
-      return
-    end
-    if @rm.count_of_users.to_i == RoomUser.where('room_id = ?', @rm.id).all.length
-      redirect_to :join, notice: 'Комната полностью заполнена!'
-      return
-    end
-    if @rm&.authenticate(params[:password])
-      if RoomUser.where('room_id = ? AND user_id = ?', @rm.id, current_user.id).take
-        redirect_to :join, notice: 'юзер уже в комнате!'
-        return
-      end
-      if (t = Invite.where('room_id = ? AND user_id = ?', @rm.id, current_user.id).take)
-        t.destroy
-      end
-      @newroom = RoomUser.create
-      @newroom.update(room_id: @rm.id, user_id: current_user.id, role: 'player', wish: params[:wish],
-                      real_username: params[:real_username])
-      redirect_to showroom_url(id: @rm.id), notice: 'вы успешно вступили в комнату!'
-    else
-      redirect_to main_room_join_url, notice: 'неверный пароль!'
-    end
+    redirect_to profile_url(id: Room.where('id = ?', params[:id]).take.id), notice: t('.reject')
   end
 
   def accept_invite; end
@@ -80,5 +49,4 @@ class MainRoomController < ApplicationController
   def set_room
     @room = Room.find(params[:id])
   end
-
 end

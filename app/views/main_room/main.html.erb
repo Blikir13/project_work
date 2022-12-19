@@ -18,14 +18,14 @@
 <ul class="nav nav-pills">
 <% if signed_in?%>
 <a>
-<%=button_to  t('.quit'), session_logout_path, class: "btn btn-outline-primary me-3 fs-2"%>
+<%=button_to  t('.quit'), session_logout_path, class: "btn btn-outline-primary me-3 fs-2", id: "btn_quit"%>
 <%= form_with url: :profile, method: :get do |form| %>
-  <%= form.submit t('.view'), id: 'submit-btn', class: "btn btn-primary fs-2" %>
+  <%= form.submit t('.view'), id: 'submit-btn', class: "btn btn-primary fs-2", id: "btn_show_profile" %>
   </a>
 <% end %>
 <%else%>
-<%=button_to t('.reg'), new_user_path, method: :get, class: "btn btn-outline-primary me-3 fs-2"%>
-<%=button_to t('.log'), session_login_path, method: :get, class: "btn btn-primary fs-2"%>
+<%=button_to t('.reg'), new_user_path, method: :get, class: "btn btn-outline-primary me-3 fs-2", id: 'reg'%>
+<%=button_to t('.log'), session_login_path, method: :get, class: "btn btn-primary fs-2", id: 'login'%>
 <%end%>
 </ul>
 </header>
@@ -40,7 +40,7 @@
 </div>
 
 <%unless flash[:notice].blank?%>
-  <h2 style = 'color:red'><%=flash[:notice]%></h2>
+  <h2 style = 'color:red' id = "notice_main"><%=flash[:notice]%></h2>
 <%end%>
 <div class="d-grid gap-3 col-3 mx-auto text-center fs-1 container justify-content-center">
 <%= form_with url: createroom_url(locale: params[:locale]),params:{locale: params[:locale]} , method: :get do |form| %>
@@ -48,11 +48,11 @@
   <br>
 <% end %>
 <%= form_with url: join_url(locale: params[:locale]), method: :get do |form| %>
-  <%= form.submit t('.join'), id: '1submit-btn', class: "btn btn-primary main_to_btn fs-1" %>
+  <%= form.submit t('.join'), id: '1submit-btn', class: "btn btn-primary main_to_btn fs-1", id:'btn_join_room' %>
   <br>
 <% end %>
 <%= form_with url: :search, method: :get do |form| %>
-  <%= form.submit t('.send'), id: '1submit-btn', class: "btn btn-primary main_to_btn fs-1" %>
+  <%= form.submit t('.send'), id: '1submit-btn', class: "btn btn-primary main_to_btn fs-1", id:"btn_send_invite" %>
   <br>
 <% end %>
 </div>

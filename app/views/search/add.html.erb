@@ -11,11 +11,11 @@
 <%= form_with url: addroom_url(:id => params[:id]), method: :post, class: "center" do |form| %>
     <%= form.select :room, @mas%>
     <br>
-    <%= form.submit t('.send'), class:"btn btn-primary fs-2 mt-4" %>
+    <%= form.submit t('.send'), class:"btn btn-primary fs-2 mt-4", id:"btn_send_invite_room"%>
 <%end%>
 <% else %>
 <div class="text-danger">
-У вас пока нет комнат!
+<%= t('.not') %>
 </div>
 <%end%>
 </div >

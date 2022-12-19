@@ -8,14 +8,14 @@
             <%= form_with(model: user) do |form| %>
               <% if user.errors.any? %>
                 <div style="color: red">
-                  <h2><%= pluralize(user.errors.count, "error") %> </h2>
-
+                <h2>
                   <ul>
                     <% user.errors.each do |error| %>
-                      <li><%= error.message %></li>
+                      <li id="regres"><%= error.message %></li>
                     <% end %>
                   </ul>
                 </div>
+                </h2>
               <% end %>
               <%unless current_user%>
               <h2 class="fw-bold mb-2 text-uppercase"> <%= t('.reg') %> </h2>
@@ -26,7 +26,6 @@
               <div class="form-outline form-white mb-4">
                 <%=form.text_field :username, require: true, class: "form-control form-control-lg" %>
                 <%=form.label :username,  class: "form-label" %>
-
               </div>
 
               <div class="form-outline form-white mb-4">
@@ -42,7 +41,7 @@
                 <%=form.label :password_confirmation,  class: "form-label" %>
               </div>
               <%unless current_user%>
-              <%=form.submit t('.sign'), class: "btn btn-outline-light btn-lg px-5", require: true%>
+              <%=form.submit t('.sign'), class: "btn btn-outline-light btn-lg px-5", require: true, id: 'reguser'%>
               <%else%>
              <%=form.submit t('.edit'), class: "btn btn-outline-light btn-lg px-5", require: true%>
               <%end%>

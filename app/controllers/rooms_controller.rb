@@ -7,6 +7,10 @@ class RoomsController < ApplicationController
     @room = Room.new
   end
 
+  def set_room
+    @room = Room.find(params[:id])
+  end
+
   def check
     redirect_to main_path, notice: t('.n') unless signed_in?
   end
@@ -14,7 +18,7 @@ class RoomsController < ApplicationController
   def create
     @room = Room.create(room_params)
     if History.find_by(room_name: @room.room_name)
-      redirect_to createroom_url, notice: 'Комната с таким именем уже существует'
+      redirect_to createroom_url, notice: t('.n1')
       return
     end
     @roomuser = RoomUser.create(roomuser_params)
@@ -25,11 +29,9 @@ class RoomsController < ApplicationController
       redirect_to showroom_url(id: @room.id)
     else
       render 'rooms/createroom', status: :unprocessable_entity
+      @room.destroy
+      @roomuser.destroy
     end
-  end
-
-  def set_room
-    @room = Room.find(params[:id])
   end
 
   def edit; end
@@ -46,7 +48,7 @@ class RoomsController < ApplicationController
 
   def deleteuser
     RoomUser.where('user_id = ? AND room_id = ?', params[:uid], params[:id]).take.destroy
-    redirect_to showroom_url, notice: 'вы успешно удалили человека из комнаты!'
+    redirect_to showroom_url, notice: t('.success')
   end
 
   def add_to_History
@@ -68,15 +70,13 @@ class RoomsController < ApplicationController
   def destroy
     RoomUser.where('room_id = ?', @room.id).all.each(&:destroy)
     @room.destroy
-    redirect_to profile_url, notice: 'Room was successfully destroyed.'
+    redirect_to profile_url, notice: t('.success')
   end
 
   def quit
     RoomUser.where('room_id = ? AND user_id = ?', params[:id], current_user.id).take.destroy
-    unless RoomUser.where('room_id = ?', params[:id]).take
-      Room.find_by(id: params[:id]).destroy
-    end
-    redirect_to profile_url, notice: 'вы успешно вышли из комнаты'
+    Room.find_by(id: params[:id]).destroy unless RoomUser.where('room_id = ?', params[:id]).take
+    redirect_to profile_url, notice: t('.success')
   end
 
   def lottery
@@ -88,7 +88,46 @@ class RoomsController < ApplicationController
                          room_id: params[:id]).update(gift_user_id: a[index + 1])
       end
     end
-    redirect_to showroom_url, notice: 'вы успешно удалили человека из комнаты!'
+    redirect_to showroom_url(id: params[:id]), notice: t('.success')
+  end
+
+  def roomjoin
+    @rm = Room.where('room_name = ?', params[:room_name]).take
+    unless @rm
+      redirect_to :join, notice: t('.not_room')
+      return
+    end
+    if RoomUser.find_by(room_id: @rm.id)
+      if RoomUser.find_by(room_id: @rm.id).gift_user_id
+        redirect_to :join, notice: t('.lottery')
+        return
+      end
+    else
+      redirect_to :join, notice: t('.lottery')
+      return
+    end
+    if @rm.count_of_users.to_i == RoomUser.where('room_id = ?', @rm.id).all.length
+      redirect_to :join, notice: t('.full')
+      return
+    end
+    if @rm&.authenticate(params[:password])
+      if RoomUser.where('room_id = ? AND user_id = ?', @rm.id, current_user.id).take
+        redirect_to :join, notice: t('.user')
+        return
+      end
+      if (t = Invite.where('room_id = ? AND user_id = ?', @rm.id, current_user.id).take)
+        t.destroy
+      end
+      @newroom = RoomUser.create
+      if @newroom.update(room_id: @rm.id, user_id: current_user.id, role: 'player', wish: params[:wish],
+                         real_username: params[:real_username])
+        redirect_to showroom_url(id: @rm.id), notice: t('.success')
+      else
+        render 'main_room/join', status: :unprocessable_entity
+      end
+    else
+      redirect_to join_url, notice: t('.password')
+    end
   end
 
   private
@@ -100,9 +139,5 @@ class RoomsController < ApplicationController
 
   def roomuser_params
     params.require(:room).permit(:wish, :real_username)
-  end
-
-  def return_room
-    params.require(:room).permit(:room_name)
   end
 end

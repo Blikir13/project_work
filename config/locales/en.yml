@@ -70,6 +70,24 @@ en:
       p2: "The essence of the game is the exchange of gifts between all participants. The name of the person to whom you are giving a gift is chosen randomly and is communicated only to you. Until the moment of exchanging gifts, no one knows who is giving a gift to whom. And not a single participant knows who got his name."
       p3: "First of all, you should log in to the site, then on the main page you can create a room to whichyour friends will be able to connect. Also, after creating a room, you will be able to send an invitation to your friend yourself, whichwill be displayed in his profile.All rooms are in your profile. By clicking on the name of the room, you will go to this room and see detailed information, and you can alsostart drawing gifts at any time."
       back: "get back"
+    createroom:
+      n: "You're not login"
+    show:
+      n: "You're not login"
+    roomjoininvite:
+      lottery: "Lottery already was in the room"
+      full: "Room in complitely filled"
+      success: "You're successfuly joined room"
+    reject_invite:
+      reject: "You're successfuly rejected invite"
+    join_invite:
+      remain: "There is very little left"
+      real: "Real name"
+      wish: "Your wish"
+      rule: "Don't know rules?"
+      click: "click here"
+      join: "Join room"
+      back: "back to main"
   activerecord:
     attributes:
       room:
@@ -94,6 +112,12 @@ en:
       log: "login"
       to_main: "to the main page"
       to_prof: "back to profile"
+      create:
+        notice: "User was successfully created"
+      update:
+        notice: "User was successfully edit"
+      destroy:
+        notice: "User was successfully destroyed"
   rooms:
     create:
       know: "Learn the rules?"
@@ -102,21 +126,39 @@ en:
       to_main: "back to main"
       title: "Do you want to create the room?"
       n: "You don't login"
+      n1: "Room alreary exist"
     update:
       not: "Room was succesfule updated"
     room:
       que: "Do you want to edit the room?"
       edit: "Edit the room"
       back: "back to room"
+    deleteuser:
+      succes: "You're succesfully delete user from this room"
+    destroy:
+      success: "Room successfuly deleted"
+    quit:
+      success: "You successfully exit room"
+    lottery:
+      success: "Lottery already was in this room"
+    roomjoin:
+      not_room: "Don't have room with this name"
+      lottery: "Lottery already was in this room"
+      full: "the room is completely filled"
+      user: "User already in room"
+      success: "You successfully joined room"
+      password: "Incorrect password"
   session:
     login:
-        username: "Username" 
-        password: "Password"
-        log: "login"
-        inp: "Input username and password!"
-        que: "Don't have an account yet?"
-        reg: "sign up"
-        to_main: "back to main"
+      username: "Username" 
+      password: "Password"
+      log: "login"
+      inp: "Input username and password!"
+      que: "Don't have an account yet?"
+      reg: "sign up"
+      to_main: "back to main"
+    create:
+      error: "Uncorrect login or password"
   search:
     input:
       title: "Input login"
@@ -131,6 +173,22 @@ en:
       send: "send"
       link: "back to input"
       main: "to main"
-
-
-
+      not: "You don't have rooms yet!"
+    addroom:
+      user: "User already in room"
+      invite: "Invite already sended!"
+      success: "User get your invite"
+  application:
+    check:
+      notice: "You're not login"
+  m1: "Roomname can't be blank"
+  m2: "Roomname already exist"
+  m3: "Password can't be blank"
+  m4: "Uncoorect count of users, it must be greater than 2"
+  user_exist: "Username already exist"
+  user_blank: "Username can't be blank"
+  pass_blank: "Password can't be blank"
+  email_unc: "Uncorrected format of email, it should be: santa@christams.gift"
+  wish_blank: "Wish can't be blank, share your dream"
+  real_unc: "Uncorrected format of real username, it should be: Роман"
+  sc: "Secret Santa"

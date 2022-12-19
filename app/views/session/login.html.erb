@@ -7,7 +7,7 @@
             <div class="mb-md-5 mt-md-4 pb-5">
             <%=form_with url: session_create_url, method: :post, local:true do |f|%>
               <h2 class="fw-bold mb-2 text-uppercase"> <%= t('.log') %> </h2>
-              <p class="text-white-50 mb-5"> <%= t('.inp') %> </p>
+              <p class="text-white-50 mb-5"> <%= t('.inp') %> </p id="logres">
                             <%unless flash[:notice].blank?%>
                 <h2 style = 'color:red'><%=flash[:notice]%></h2>
             <%end%>
@@ -21,7 +21,7 @@
                 <%=f.password_field :password, require: true, class:"form-control form-control-lg" %>
                 <label class="form-label" for="typePasswordX"> <%= t('.password') %> </label>
               </div>
-                <%=f.submit t('.log'), class: "btn btn-outline-light btn-lg px-5", require: true%>
+                <%=f.submit t('.log'), class: "btn btn-outline-light btn-lg px-5", require: true, id:'loguser'%>
             </div>
             <div>
               <p class="mb-1"> <%= t('.que') %> 

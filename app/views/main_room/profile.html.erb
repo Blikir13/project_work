@@ -31,7 +31,7 @@
           </div>
           <div>
             <h1 class="align-items-center my-2">
-              <%= link_to t('.to_main'), main_path%>
+              <%= link_to t('.to_main'), main_path, id:"link_back_from_profile"%>
             </h1>
           </div>
       </div>
@@ -46,7 +46,7 @@
 <div class="container mt-2 d-flex justify-content p-1 text-center justify-content-center me-2">
   <div class="card p-4 justify-content-center">
       <div class="ml-5 w-100 px-5 ">
-          <h1 class="mb-1"> <%= link_to @room.room_name, showroom_url(:id => @room.id) %> </h1>
+          <h1 class="mb-1"> <%= link_to @room.room_name, showroom_url(:id => @room.id), id:"link_to_show_room" %> </h1>
           <%if x.role == 'admin'%>
             <h4 class="mb-1 p-2"> <%= t('.admin')%> </h4>
           <%else%>
@@ -102,7 +102,7 @@
           </h1>
           <h4> <%=t('.from')%> <%=User.find_by(id: x.inviter_id).username%> </h4>
           <div class="button mt-3 d-flex flex-row g-2 justify-content-center">
-          <%= button_to t('.accept'), :join_invite ,params: {id: x.room_id} ,method: :get ,class: "btn btn-sm btn-outline-primary fs-3 me-2" %>
+          <%= button_to t('.accept'), :join_invite ,params: {id: x.room_id} ,method: :get ,class: "btn btn-sm btn-outline-primary fs-3 me-2", id:"btn_accept_invite" %>
           <%= button_to t('.reject'), :reject_invite, params: {id: x.room_id}, method: :post, class: "btn btn-sm btn-primary ml-2 fs-3 " %>
         </div>
       </div>

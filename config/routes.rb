@@ -6,27 +6,32 @@ Rails.application.routes.draw do
     post 'session/logout'
     get 'session/login'
     post 'session/create'
-    post 'main_room/roomjoin'
-    get 'main_room/profile', as: 'profile'
+
     root 'main_room#main', as: 'main'
-    get 'rooms/createroom', as: 'createroom'
+    get 'main_room/profile', as: 'profile'
     get 'main_room/join', as: 'join'
     get 'main_room/join_invite', as: 'join_invite'
     post 'main_room/roomjoininvite'
     post 'main_room/reject_invite', as: 'reject_invite'
     get 'main_room/showroom', as: 'showroom'
+    get 'main_room/showhistory', as: 'history'
+    post 'res', to: 'main_room#show'
+    get 'main_room/rules', as: 'rules'
+
     post 'rooms/deleteuser', as: 'deleteuser'
     post 'rooms/lottery', as: 'lottery'
-    get 'search/input', as: 'search'
-    post 'result', to: 'search#show'
-    post 'res', to: 'main_room#show'
-    get 'search/add', as: 'add'
-    post 'search/addroom', as: 'addroom'
-    post 'users/destroy', as: 'destroy'
+    get 'rooms/createroom', as: 'createroom'
     post 'rooms/destroy', as: 'destroyroom'
     post 'rooms/quit', as: 'quit'
-    get 'main_room/showhistory', as: 'history'
-    get 'main_room/rules', as: 'rules'
+    post 'rooms/roomjoin'
+
+    get 'search/add', as: 'add'
+    get 'search/input', as: 'search'
+    post 'result', to: 'search#show'
+    post 'search/addroom', as: 'addroom'
+
+    post 'users/destroy', as: 'destroy'
+
     resources :users, :rooms
   end
 end

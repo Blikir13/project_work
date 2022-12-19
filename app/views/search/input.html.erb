@@ -7,7 +7,7 @@
 <%= form_with url: result_path, class: "row gy-3 gx-3 ", id: "palindrom_form" do |form| %>
     <%= form.text_field :n, class: "form-control" %>
     <br>
-    <%= form.submit t('.search'), class:"btn btn-dark fs-3" %>
+    <%= form.submit t('.search'), class:"btn btn-dark fs-3", id:"btn_find_user" %>
 </div >
 <%end%>
 <%=link_to t('.to_main'), main_path, class: "link-light" %>

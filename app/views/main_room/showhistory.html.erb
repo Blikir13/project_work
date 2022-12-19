@@ -1,8 +1,8 @@
 
 <% unless (t=History.where('receiver_id = ?', current_user.id).all).empty? || (m=History.where('giver_id = ?', current_user.id).all).empty?%>
-    <div class="col-5 mx-auto text-center fs-1 bgo mt-5 ">
-    <div class="fs-1 text-white"> <%= t('.title') %> </div>
-    <table class="table table-striped fs-2 text-white my-3">
+    <div class="col-5 mx-auto text-center fs-1 mt-5 ">
+    <div class="fs-1 text-white bgo"> <%= t('.title') %> </div>
+    <table class="table table-striped fs-2 my-3">
     <thead>
     <tr>
     <th scope="col"> <%= t('.to_whom') %> </th>
@@ -19,18 +19,23 @@
     <% end %>
     </table>
 
-    <div class="fs-1 text-white"> <%= t('.spoiler') %> </div>
+    <div class="fs-1 text-white bgo"> <%= t('.spoiler') %> </div>
+    <div class="bgo">
     <%= form_with url: res_path(id: t) do |form| %>
-        <%= form.submit t('.btn'), class:"fs-3 btn btn-outline-dark", style:"width:200px" %>
+        <%= form.submit t('.btn'), class:"fs-3 btn btn-outline-dark my-3", style:"width:200px" %>
     <%end%>
-
+    </div>
     <div id="result" class="table"> </div>
-
+    <div class="bgo">
+    <%= link_to t('.back'), profile_path, class: "link-dark" %>
+    </div>
 <% else %>
-    <div class="col-5 mx-auto text-center fs-1 bgo mt-5 ">
-        Подарков пока не было!
+    <div class="col-5 mx-auto text-center fs-1 bgo ">
+        <%= t('.pres') %>
+        <br>
+        <%= link_to t('.back'), profile_path, class: "link-dark" %>
     </div>
 <% end %>
 
-<%= link_to t('.back'), profile_path, class: "link-dark" %>
+
 </div>
