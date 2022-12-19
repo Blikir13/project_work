@@ -26,6 +26,9 @@
             <%= button_to t('.change'), edit_user_path(id: us, locale: params[:locale]), method: :get, class: "btn btn-sm btn-outline-primary w-150 fs-3 me-3" %>
             <%= button_to t('.deletep'), destroy_url(:id => us, locale: params[:locale]),method: :post, params:{locale: params[:locale]} , class: "btn btn-sm btn-primary w-100 ml-2 fs-3 " %>
           </div>
+          <div class="button mt-3 d-flex flex-row g-1 me-1 justify-content-center">
+            <%= button_to t('.history'), :history, method: :get, class: "btn btn-sm btn-outline-primary fs-3", style: "width:330px;" %>
+          </div>
           <div>
             <h1 class="align-items-center my-2">
               <%= link_to t('.to_main'), main_path%>
@@ -52,8 +55,12 @@
           <div class="p-5 mt-2 d-flex justify-content-center rounded text-white stats">
             <div class="d-flex flex-column justify-content-center px-4">
                 <h2><%= t('.count')%></h2>
+                <% if (l = History.find_by(room_name: @room.room_name)) %>
+                <h2> <%= l.all.length %> </h2>
+                <%else%>
                 <h2><%= RoomUser.where('room_id = ?', @room.id).all.length%> /
                 <%= @room.count_of_users%></h2>
+                <%end%>
             </div>
           </div>
 
@@ -61,10 +68,14 @@
             <div class="mt-1 fs-4 text-danger">
             <%=t('.lottery')%>
             </div>
-            <%end%>
+          <%end%>
             <%if x.role == 'admin'%>
             <div class="button mt-3 justify-content-center">
+              <% unless x.gift_user_id %>
               <%= button_to t('.deleter'), destroyroom_url(:id => @room),method: :post , params:{locale: params[:locale]}, class: "btn btn-sm btn-outline-primary w-150 fs-4" %>
+              <% else %>
+                <%= button_to t('.quit'), quit_url(:id => @room.id), class: "btn btn-sm btn-outline-primary w-150 fs-4" , params: { id: @room.id }, method: :post%>
+              <% end %>
               </div>
             <%else%>
               <div class="button mt-3 justify-content-center">

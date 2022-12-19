@@ -48,9 +48,11 @@
               <%end%>
             </div>
                 <div>
+                <% unless current_user %>
               <p class="mb-1"> <%= t('.question') %> 
               <%=link_to t('.log'), session_login_path, class: "text-white-50 fw-bold"%>
               </p>
+              <% end %>
             </div>
             <div>
             </div>

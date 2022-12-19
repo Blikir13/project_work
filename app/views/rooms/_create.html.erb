@@ -18,6 +18,10 @@
                     </ul>
                   </div>
                 <% end %>
+                <%unless flash[:notice].blank?%>
+                  <h2 style = 'color:red'><%=flash[:notice]%></h2>
+                <%end%>
+                
                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4"><%=t('.title')%></p>
                 <form class="mx-1 mx-md-4">
                   <div class="d-flex flex-row align-items-center mb-4">
@@ -70,7 +74,7 @@
 
                   <div class="form-check d-flex justify-content-center mb-5">
                     <label class="form-check-label" for="form2Example3">
-                      <%= t('.know') %> <a href="#!"> <%= t('.click') %> </a>
+                      <%= t('.know') %>  <%= link_to t('.click'), :rules %>
                     </label>
                   </div>
 

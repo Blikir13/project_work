@@ -1,0 +1,36 @@
+
+<% unless (t=History.where('receiver_id = ?', current_user.id).all).empty? || (m=History.where('giver_id = ?', current_user.id).all).empty?%>
+    <div class="col-5 mx-auto text-center fs-1 bgo mt-5 ">
+    <div class="fs-1 text-white"> <%= t('.title') %> </div>
+    <table class="table table-striped fs-2 text-white my-3">
+    <thead>
+    <tr>
+    <th scope="col"> <%= t('.to_whom') %> </th>
+    <th scope="col"> <%= t('.wish') %> </th>
+    <th scope="col"> <%= t('.roomname') %> </th>
+    </tr>
+    </thead>
+    <% m.each do |x| %>
+        <tr>
+        <td> <%= x.receiver_name %> </td>
+        <td class="col-5"> <%= x.receiver_wish %> </td>
+        <td class="col-5"> <%= x.room_name %> </td>
+        </tr>
+    <% end %>
+    </table>
+
+    <div class="fs-1 text-white"> <%= t('.spoiler') %> </div>
+    <%= form_with url: res_path(id: t) do |form| %>
+        <%= form.submit t('.btn'), class:"fs-3 btn btn-outline-dark", style:"width:200px" %>
+    <%end%>
+
+    <div id="result" class="table"> </div>
+
+<% else %>
+    <div class="col-5 mx-auto text-center fs-1 bgo mt-5 ">
+        Подарков пока не было!
+    </div>
+<% end %>
+
+<%= link_to t('.back'), profile_path, class: "link-dark" %>
+</div>

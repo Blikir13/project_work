@@ -9,6 +9,9 @@ en:
       send: "Send an invitation"
       reg: "Registration"
       log: "login"
+      new_year: "There are only"
+      before: "days left until the new year"
+      fast: "Hurry up to raffle gifts, don't upset our secret Santa!"
     profile:
       roomsc: "Total of rooms"
       roomsa: "Rooms where you are the admin"
@@ -25,6 +28,7 @@ en:
       accept: "accept"
       reject: "reject"
       to_main: "to the main page"
+      history: "History"
     showroom:
       info: "Information"
       players: "players"
@@ -46,6 +50,26 @@ en:
       join: "Join the room"
       click: "Click here"
       title: "Join an existing room?"
+    showhistory:
+      title: "You gift to"
+      to_whom: "to whom"
+      wish: "wish"
+      roomname: "name of the room"
+      spoiler: "Find out who gave you gifts! Carefully, maybe a spoiler!"
+      btn: "Spoiler!!!"
+      pres: "There were no gifts yet"
+    res:
+      roomname: "name of the room"
+      who: "who"
+      uwish: "your wish"
+      back: "back to profile"
+    rules:
+      rule: "Rules"
+      st: "Secret Santa"
+      p1: "- this is a fun New Year's game for a friendly company, in which at least 3 people can participate."
+      p2: "The essence of the game is the exchange of gifts between all participants. The name of the person to whom you are giving a gift is chosen randomly and is communicated only to you. Until the moment of exchanging gifts, no one knows who is giving a gift to whom. And not a single participant knows who got his name."
+      p3: "First of all, you should log in to the site, then on the main page you can create a room to whichyour friends will be able to connect. Also, after creating a room, you will be able to send an invitation to your friend yourself, whichwill be displayed in his profile.All rooms are in your profile. By clicking on the name of the room, you will go to this room and see detailed information, and you can alsostart drawing gifts at any time."
+      back: "get back"
   activerecord:
     attributes:
       room:
@@ -80,6 +104,10 @@ en:
       n: "You don't login"
     update:
       not: "Room was succesfule updated"
+    room:
+      que: "Do you want to edit the room?"
+      edit: "Edit the room"
+      back: "back to room"
   session:
     login:
         username: "Username" 
@@ -102,6 +130,7 @@ en:
       title: "Choose a room where you want to add"
       send: "send"
       link: "back to input"
+      main: "to main"
 
 
 

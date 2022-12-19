@@ -2,7 +2,7 @@
 <div class = "container">
 
 <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+<a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
 <svg class="bi me-2" width="40" height="32">
 <use xlink:href="#bootstrap"></use>
 </svg>
@@ -32,10 +32,11 @@
 </div>
 
 <div class="col-5 mx-auto text-center fs-1 text-light bgo justify-content-center">
-До нового года осталось всего
+<%= t('.new_year') %>
 <%= ( Date.new(2022, 12, 31)- Date.today).to_i %>
- дней! <br>
-Поспеши разыграть подарки, не огорчай нашего тайного Санту!
+<%= t('.before') %>
+<br>
+<%= t('.fast') %>
 </div>
 
 <%unless flash[:notice].blank?%>
@@ -70,13 +71,13 @@ animateBall();
   function animateBall() {
   document.getElementById("animatedImage").style.left=distanceBall + "px";
   distanceBall+=directionBall;
-  if (distanceBall>window.screen.width - 300 ) { 
+  if (distanceBall>window.screen.width - 350 ) { 
   document.getElementById('animatedImage').style.top = 1;
   document.getElementById('animatedImage').style.left = 1;
   directionBall = -2;
   document.getElementById('img1').className = 'left';
   }
-  if (distanceBall<0) {
+  if (distanceBall<-40) {
   directionBall = 2;
   document.getElementById('img1').className = 'right';
   }

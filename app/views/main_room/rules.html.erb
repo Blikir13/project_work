@@ -1,0 +1,46 @@
+<div class=" mt-5  justify-content justify-content-center bgo mx-5">
+  <div class="p-5">
+  <div class="ml-2 px-1 fs-1">
+    <div class="text-center"> <strong>  <%= t('.rule') %> </strong> </div>
+    <div class="lh-base">
+    <strong> <%= t('.st') %> </strong> <%= t('.p1') %>
+    </div>
+    <div class="lh-base">
+    <%= t('.p2') %>
+    </div>
+    <div class="lh-base">
+    <%= t('.p3') %>
+    </div>
+    <%= link_to t('.back'), :back, class:"link-light text-center" %>
+</div>
+</div>
+</div>
+
+
+<div id="animatedImage" style="position:fixed;padding-top:0px;z-index:99;left:1px;">
+ <img id="img1" src="https://i.pinimg.com/originals/d9/6d/15/d96d15973176b36891167fc8a9a43d29.gif" alt="animatedImage" class="m" />
+</div>
+<script>
+var distanceBall=1; 
+var directionBall=2; 
+document.getElementById('animatedImage').style.top = 1;
+document.getElementById('animatedImage').style.left = 1;
+var timerToggle=null; 
+
+animateBall();
+  function animateBall() {
+  document.getElementById("animatedImage").style.left=distanceBall + "px";
+  distanceBall+=directionBall;
+  if (distanceBall>window.screen.width - 350 ) { 
+  document.getElementById('animatedImage').style.top = 1;
+  document.getElementById('animatedImage').style.left = 1;
+  directionBall = -2;
+  document.getElementById('img1').className = 'left';
+  }
+  if (distanceBall<-40) {
+  directionBall = 2;
+  document.getElementById('img1').className = 'right';
+  }
+  timerToggle=setTimeout(function() { animateBall(); }, 1);
+  }
+  </script>

@@ -1,0 +1,18 @@
+<div id="result" class="table">
+    <table class="table table-striped fs-3 my-3 t">
+    <thead>
+    <tr>
+    <th scope="col"> <%= t('.who') %> </th>
+    <th scope="col"> <%= t('.uwish') %> </th>
+    <th scope="col"> <%= t('.roomname') %> </th>
+    </tr>
+    </thead>
+    <% @res.each do |x| %>
+        <tr>
+        <td> <%= x.giver_name %> </td>
+        <td class="col-5"> <%= x.receiver_wish %> </td>
+        <td class="col-5"> <%= x.room_name %> </td>
+        </tr>
+    <% end %>
+    </table>
+</div>

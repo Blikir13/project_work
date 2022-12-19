@@ -5,6 +5,10 @@ class MainRoomController < ApplicationController
 
   def profile; end
 
+  def show
+    @res = History.where('receiver_id = ?', current_user.id).all
+  end
+
   def createroom
     redirect_to main_path, notice: t('.n') unless signed_in?
     @room = Room.new
@@ -71,45 +75,10 @@ class MainRoomController < ApplicationController
     end
   end
 
-  def quit
-    RoomUser.where('room_id = ? AND user_id = ?', params[:id], current_user.id).take.destroy
-    respond_to do |format|
-      format.html { redirect_to profile_url, notice: 'вы успешно вышли из комнаты' }
-    end
-  end
-
-  def deleteuser
-    p params[:id]
-    RoomUser.where('user_id = ?', params[:id]).take.destroy
-    respond_to do |format|
-      format.html { redirect_to showroom_url, notice: 'вы успешно удалили человека из комнаты!' }
-    end
-  end
-
-  def lottery
-    a = []
-    RoomUser.where('room_id = ?', params[:id]).all.each { |x| a.push(x.user_id) }
-    a.shuffle!.push(a[0]).each_with_index do |el, index|
-      unless index == a.length - 1
-        RoomUser.find_by(user_id: el,
-                         room_id: params[:id]).update(gift_user_id: a[index + 1])
-      end
-    end
-    redirect_to showroom_url, notice: 'вы успешно удалили человека из комнаты!'
-  end
-
   def accept_invite; end
 
   def set_room
     @room = Room.find(params[:id])
   end
 
-  def destroyroom
-    RoomUser.where('room_id = ?', @room.id).all.destroy
-    @room.destroy
-    respond_to do |format|
-      format.html { redirect_to profile, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
 end
