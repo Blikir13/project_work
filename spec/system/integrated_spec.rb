@@ -108,12 +108,45 @@ RSpec.describe 'Static content', type: :system do
     fill_in :username, with: 'Test2'
     fill_in :password, with: 'Test2'
     find('#loguser').click
-    sleep(3)
+    sleep(1)
     find('#btn_show_profile').click
     find('#link_to_show_room').click
-    sleep(5)
+    sleep(2)
     find('#btn_lottery').click
     # Проведение розыгрыша
-    sleep(5)
+    sleep(1)
+  end
+
+  scenario 'incorrect room' do
+    visit main_path
+    find('#reg').click
+    fill_in :user_username, with: 'Test1'
+    fill_in :user_user_mail, with: 'Test1@test.test'
+    fill_in :user_password, with: 'Test1'
+    fill_in :user_password_confirmation, with: 'Test1'
+    find('#reguser').click
+    sleep(0.5)
+    find('#btn_quit').click
+    # Регистрация 1 тестера
+    find('#reg').click
+    fill_in :user_username, with: 'Test2'
+    fill_in :user_user_mail, with: 'Test2@test.test'
+    fill_in :user_password, with: 'Test2'
+    fill_in :user_password_confirmation, with: 'Test2'
+    find('#reguser').click
+    sleep(0.5)
+    expect(current_path).to eq('/en')
+    # Регситрация 2 тестера
+    visit 'rooms/createroom'
+    fill_in :room_room_name, with: 'TestRoom'
+    fill_in :room_password, with: 'TestRoom'
+    fill_in :room_password_confirmation, with: 'TestRoom'
+    fill_in :room_count_of_users, with: '5'
+    fill_in :room_real_username, with: 'Тестер второй'
+    fill_in :room_wish, with: 'New computer'
+    find('#btn_createroom').click
+    visit('/en/main_room/showroom?id=2')
+    expect(find('#notice_main')).to have_text('Не лезь куда не нужно')
+    sleep(2)
   end
 end

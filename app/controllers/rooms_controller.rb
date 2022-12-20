@@ -97,12 +97,11 @@ class RoomsController < ApplicationController
       redirect_to :join, notice: t('.not_room')
       return
     end
-    if RoomUser.find_by(room_id: @rm.id)
-      if RoomUser.find_by(room_id: @rm.id).gift_user_id
-        redirect_to :join, notice: t('.lottery')
-        return
-      end
-    else
+    if RoomUser.find_by(room_id: @rm.id).try(:gift_user_id)
+      redirect_to :join, notice: t('.lottery')
+      return
+    end
+    unless RoomUser.find_by(room_id: @rm.id)
       redirect_to :join, notice: t('.lottery')
       return
     end

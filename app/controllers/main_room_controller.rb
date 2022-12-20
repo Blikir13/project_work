@@ -1,6 +1,8 @@
 class MainRoomController < ApplicationController
   skip_before_action :require_login, only: :main
   before_action :check, only: :roomjoin
+  before_action :check_id, only: :showroom
+
   def main; end
 
   def profile; end
@@ -46,7 +48,14 @@ class MainRoomController < ApplicationController
 
   def accept_invite; end
 
+  private
+
   def set_room
     @room = Room.find(params[:id])
+  end
+
+  def check_id
+    redirect_to main_path, notice: 'Не лезь куда не нужно!' unless RoomUser.find_by(room_id: params[:id],
+                                                                                    user_id: current_user.id)
   end
 end
